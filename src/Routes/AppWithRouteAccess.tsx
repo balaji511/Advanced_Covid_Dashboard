@@ -1,11 +1,12 @@
-import { Typography } from "@mui/material";
 import React from "react";
+import { Route, Switch } from "react-router-dom";
+import Login from "../Pages/Login/Login.page";
 
 const AppWithRouteAccess: React.FC = () => {
   return (
-    <div>
-      <Typography>App Component</Typography>
-    </div>
+    <Switch>
+      <Route exact path="/login" component={Login} />
+    </Switch>
   );
 };
 
