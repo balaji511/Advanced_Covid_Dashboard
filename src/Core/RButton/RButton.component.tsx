@@ -5,6 +5,7 @@ interface IButtonProps {
   fullWidth?: boolean;
   icon?: any;
   spacing?: boolean;
+  isDisabled?: boolean;
 }
 
 const RButton = ({
@@ -13,6 +14,7 @@ const RButton = ({
   fullWidth = false,
   icon,
   spacing = true,
+  isDisabled = false,
 }: IButtonProps) => {
   return (
     <Button
@@ -25,6 +27,7 @@ const RButton = ({
       }}
       size="large"
       startIcon={icon}
+      disabled={isDisabled}
     >
       {label}
     </Button>
