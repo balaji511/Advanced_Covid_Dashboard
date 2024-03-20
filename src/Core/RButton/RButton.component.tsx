@@ -6,6 +6,7 @@ interface IButtonProps {
   icon?: any;
   spacing?: boolean;
   isDisabled?: boolean;
+  clickHandler: () => void;
 }
 
 const RButton = ({
@@ -15,6 +16,7 @@ const RButton = ({
   icon,
   spacing = true,
   isDisabled = false,
+  clickHandler,
 }: IButtonProps) => {
   return (
     <Button
@@ -28,6 +30,7 @@ const RButton = ({
       size="large"
       startIcon={icon}
       disabled={isDisabled}
+      onClick={clickHandler}
     >
       {label}
     </Button>

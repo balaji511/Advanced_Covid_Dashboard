@@ -28,11 +28,13 @@ import {
 import RHeaderBoldText from "../../Core/RBoldText/RBoldText.component";
 import RText from "../../Core/RText/RText.component";
 import RInputWithLabel from "../../Core/RInputWithLabel/RInputWithLabel.component";
+import RPopup from "../../Core/RPopup/RPopup.component";
 
 const Login = () => {
   const [isAdminLogin, setIsAdminLogin] = useState<boolean>(false);
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [expandDemoContent, setExpandDemoContent] = useState<boolean>(false);
+  const [popupFlag, setPopupFlag] = useState<boolean>(false);
 
   const { isMobileScreen } =
     useContext<IMobileDisplayContextType>(MobileDisplayContext);
@@ -63,6 +65,7 @@ const Login = () => {
             fullWidth={true}
             spacing={isMobileScreen ? false : true}
             icon={<AdminPanelSettingsIcon fontSize="small" />}
+            clickHandler={() => {}}
           />
           <RButton
             label={isMobileScreen ? "Code" : "Get Code"}
@@ -70,6 +73,7 @@ const Login = () => {
             fullWidth={true}
             spacing={isMobileScreen ? false : true}
             icon={<VpnKeySharpIcon fontSize="small" />}
+            clickHandler={() => {}}
           />
         </Stack>
       </>
@@ -80,6 +84,9 @@ const Login = () => {
       <>
         <RInputWithLabel label="User Name" required={true} />
         <RInputWithLabel label="Password" required={true} type={"password"} />
+        <Typography color={"red"} sx={{ textDecoration: "underline" }}>
+          Forgot Password
+        </Typography>
         <Stack width={"100%"} direction={"row"} gap={2} mt={2}>
           <RButton
             label="Login"
@@ -87,6 +94,7 @@ const Login = () => {
             fullWidth={true}
             spacing={isMobileScreen ? false : true}
             icon={<LockOpenIcon fontSize="small" />}
+            clickHandler={() => {}}
           />
           <RButton
             label="Sign up"
@@ -94,6 +102,7 @@ const Login = () => {
             fullWidth={true}
             spacing={isMobileScreen ? false : true}
             icon={<AddCircleOutlineIcon fontSize="small" />}
+            clickHandler={() => {}}
           />
         </Stack>
       </>
@@ -106,7 +115,12 @@ const Login = () => {
         Demo {isAdminLogin && "Admin"} credentials offer Temporary access for
         testing.
       </Typography>
-      <RButton label="Geneate" variant="outlined" fullWidth={true} />
+      <RButton
+        label="Geneate"
+        variant="outlined"
+        fullWidth={true}
+        clickHandler={() => setPopupFlag(true)}
+      />
     </>
   );
 
@@ -146,7 +160,6 @@ const Login = () => {
             />
           </Tabs>
         </Stack>
-
         <CardContent>
           <RHeaderBoldText>
             {`${isAdminLogin ? "CVD Admin" : "CVD User"} Login`}
@@ -181,6 +194,32 @@ const Login = () => {
           {expandDemoContent && demoContent}
         </CardContent>
       </Card>
+      <RPopup
+        parentClassName="popup-demo-creds"
+        openFlag={popupFlag}
+        closeHandler={() => setPopupFlag(false)}
+      >
+        <RHeaderBoldText>
+          Demo {isAdminLogin && "Admin"} Credentials
+        </RHeaderBoldText>
+        <RText>Use of Demo Creds</RText>
+        <RText>
+          Access demo credentials from application documentation or login page.
+          Enter provided username and password. Explore application features
+          with demo account.
+        </RText>
+        <Typography fontWeight={"bold"} mt={1}>
+          Username : Rahul
+        </Typography>
+        <Typography fontWeight={"bold"} mt={1} mb={2}>
+          {isAdminLogin ? "Code" : "Password"} : Rahul@2021
+        </Typography>
+        <RButton
+          variant="contained"
+          label="Copy To ClipBoard"
+          clickHandler={() => {}}
+        />
+      </RPopup>
     </div>
   );
 };

@@ -24,6 +24,7 @@
 @media screen and (max-width: 900px) {
   .login-container .login-container-card {
     width: 95%;
+    zoom: 86%;
   }
   .login-container .login-container-pass-text {
     width: 90%;
@@ -33,5 +34,14 @@
   .login-container .login-container-card-move-top {
     position: relative;
     bottom: 80px;
+  }
+}
+.popup-demo-creds .paperRoot {
+  width: 400px;
+  padding: 18px;
+}
+@media screen and (max-width: 600px) {
+  .popup-demo-creds .paperRoot {
+    width: 96%;
   }
 }
