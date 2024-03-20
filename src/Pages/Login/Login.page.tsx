@@ -19,6 +19,7 @@ import AdminPanelSettingsSharpIcon from "@mui/icons-material/AdminPanelSettingsS
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import ExpandMoreSharpIcon from "@mui/icons-material/ExpandMoreSharp";
 import ExpandLessSharpIcon from "@mui/icons-material/ExpandLessSharp";
+import VpnKeySharpIcon from "@mui/icons-material/VpnKeySharp";
 
 import {
   IMobileDisplayContextType,
@@ -37,6 +38,7 @@ const Login = () => {
     useContext<IMobileDisplayContextType>(MobileDisplayContext);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setExpandDemoContent(false);
     setTabIndex(newValue);
     if (newValue === 1) {
       setIsAdminLogin(true);
@@ -49,13 +51,25 @@ const Login = () => {
     return (
       <>
         <RInputWithLabel label="Admin Id" required={true} />
-        <RInputWithLabel label="Password" required={true} type={"password"} />
-        <Stack width={"100%"} direction={"row"} mt={2}>
+        <RInputWithLabel
+          label="One Time Code"
+          required={true}
+          type={"password"}
+        />
+        <Stack width={"100%"} direction={"row"} gap={2} mt={2}>
           <RButton
-            label="Admin Login"
+            label={isMobileScreen ? "Admin" : "Admin Login"}
             variant="contained"
             fullWidth={true}
+            spacing={isMobileScreen ? false : true}
             icon={<AdminPanelSettingsIcon fontSize="small" />}
+          />
+          <RButton
+            label={isMobileScreen ? "Code" : "Get Code"}
+            variant="outlined"
+            fullWidth={true}
+            spacing={isMobileScreen ? false : true}
+            icon={<VpnKeySharpIcon fontSize="small" />}
           />
         </Stack>
       </>
@@ -92,7 +106,6 @@ const Login = () => {
         Demo {isAdminLogin && "Admin"} credentials offer Temporary access for
         testing.
       </Typography>
-
       <RButton label="Geneate" variant="outlined" fullWidth={true} />
     </>
   );
@@ -110,10 +123,26 @@ const Login = () => {
             <Tab
               sx={{ width: "50%" }}
               label={isMobileScreen ? <AccountCircleSharpIcon /> : "User"}
+              icon={
+                !isMobileScreen ? (
+                  <AccountCircleSharpIcon fontSize="medium" />
+                ) : (
+                  ""
+                )
+              }
+              iconPosition="start"
             />
             <Tab
               sx={{ width: "50%" }}
               label={isMobileScreen ? <AdminPanelSettingsSharpIcon /> : "Admin"}
+              icon={
+                !isMobileScreen ? (
+                  <AdminPanelSettingsIcon fontSize="medium" />
+                ) : (
+                  ""
+                )
+              }
+              iconPosition="start"
             />
           </Tabs>
         </Stack>
