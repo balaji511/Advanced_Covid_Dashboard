@@ -32,7 +32,7 @@ import RPopup from "../../Core/RPopup/RPopup.component";
 import { IUserObject } from "../../Types/Interfaces/Login.types";
 import { userObject } from "../../ModelData/Login.model";
 import { verifyUser } from "../../utilities/Apis/apis";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [userObj, setUserObj] = useState<IUserObject>(userObject);
@@ -131,7 +131,7 @@ const Login = () => {
             fullWidth={true}
             spacing={isMobileScreen ? false : true}
             icon={<AddCircleOutlineIcon fontSize="small" />}
-            clickHandler={() => {}}
+            clickHandler={() => history.push("/signup")}
           />
         </Stack>
       </>

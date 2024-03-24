@@ -7,6 +7,7 @@ interface IInputWithLabel {
   required?: boolean;
   type?: string;
   valid?: boolean;
+  placeHolder?: string;
 }
 
 const RInputWithLabel = ({
@@ -16,13 +17,15 @@ const RInputWithLabel = ({
   value,
   valid = true,
   name,
+  placeHolder = "",
 }: IInputWithLabel) => {
   return (
-    <Stack marginBlock={1.5}>
+    <Stack marginBlock={0.5}>
       <Typography mb={1} sx={{ color: valid ? "" : "red" }}>
         {label} <span style={{ color: "red" }}>{required && "*"}</span>
       </Typography>
       <TextField
+        placeholder={placeHolder}
         name={name}
         fullWidth
         size="small"
