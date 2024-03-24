@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 interface IButtonProps {
   label: string;
-  variant: "text" | "outlined" | "contained";
+  variant?: "text" | "outlined" | "contained";
   fullWidth?: boolean;
   icon?: any;
   spacing?: boolean;
@@ -10,7 +10,7 @@ interface IButtonProps {
 }
 
 const RButton = ({
-  variant,
+  variant = "contained",
   label,
   fullWidth = false,
   icon,

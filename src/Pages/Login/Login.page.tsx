@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import RButton from "../../Core/RButton/RButton.component";
 import "./Login.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -131,7 +131,7 @@ const Login = () => {
             fullWidth={true}
             spacing={isMobileScreen ? false : true}
             icon={<AddCircleOutlineIcon fontSize="small" />}
-            clickHandler={() => {}}
+            clickHandler={() => history.push("/signup")}
           />
         </Stack>
       </>
@@ -178,10 +178,18 @@ const Login = () => {
         password: userObj.password.value,
       });
       if (verifyUserRes?.success) {
+        localStorage.setItem("accessToken", verifyUserRes.loginData.jwt_token);
         history.push("/dashboard");
       }
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      history.push("/dashboard");
+    }
+  }, []);
 
   return (
     <div className="login-container">
