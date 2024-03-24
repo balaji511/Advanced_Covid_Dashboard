@@ -29,12 +29,19 @@ import RHeaderBoldText from "../../Core/RBoldText/RBoldText.component";
 import RText from "../../Core/RText/RText.component";
 import RInputWithLabel from "../../Core/RInputWithLabel/RInputWithLabel.component";
 import RPopup from "../../Core/RPopup/RPopup.component";
+import { IUserObject } from "../../Types/Interfaces/Login.types";
+import { userObject } from "../../ModelData/Login.model";
+import { verifyUser } from "../../utilities/Apis/apis";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
+  const [userObj, setUserObj] = useState<IUserObject>(userObject);
   const [isAdminLogin, setIsAdminLogin] = useState<boolean>(false);
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [expandDemoContent, setExpandDemoContent] = useState<boolean>(false);
   const [popupFlag, setPopupFlag] = useState<boolean>(false);
+  const [loginBtnDisabled, setLoginBtnDisabled] = useState<boolean>(false);
+  const history = useHistory();
 
   const { isMobileScreen } =
     useContext<IMobileDisplayContextType>(MobileDisplayContext);
@@ -52,11 +59,19 @@ const Login = () => {
   const AdminView = () => {
     return (
       <>
-        <RInputWithLabel label="Admin Id" required={true} />
+        <RInputWithLabel
+          label="Admin Id"
+          required={true}
+          value={""}
+          name={""}
+          valid={true}
+        />
         <RInputWithLabel
           label="One Time Code"
           required={true}
           type={"password"}
+          value={""}
+          name={""}
         />
         <Stack width={"100%"} direction={"row"} gap={2} mt={2}>
           <RButton
@@ -82,8 +97,21 @@ const Login = () => {
   const userView = () => {
     return (
       <>
-        <RInputWithLabel label="User Name" required={true} />
-        <RInputWithLabel label="Password" required={true} type={"password"} />
+        <RInputWithLabel
+          name={userObj.username.fieldName}
+          valid={userObj.username.valid}
+          label={userObj.username.label}
+          required={userObj.password.required}
+          value={userObj.username.value}
+        />
+        <RInputWithLabel
+          name={userObj.username.fieldName}
+          valid={userObj.password.valid}
+          label={userObj.password.label}
+          required={userObj.password.required}
+          value={userObj.password.value}
+          type={"password"}
+        />
         <Typography color={"red"} sx={{ textDecoration: "underline" }}>
           Forgot Password
         </Typography>
@@ -94,7 +122,8 @@ const Login = () => {
             fullWidth={true}
             spacing={isMobileScreen ? false : true}
             icon={<LockOpenIcon fontSize="small" />}
-            clickHandler={() => {}}
+            clickHandler={handleLoginClick}
+            isDisabled={loginBtnDisabled}
           />
           <RButton
             label="Sign up"
@@ -123,6 +152,36 @@ const Login = () => {
       />
     </>
   );
+
+  const handleSetUserObjState = () => {
+    const tempUser = userObj;
+    tempUser.username.value = "rahul";
+    tempUser.password.value = "rahul@2021";
+    tempUser.username.valid = true;
+    tempUser.password.valid = true;
+    setUserObj(tempUser);
+    setPopupFlag(false);
+    setExpandDemoContent(false);
+  };
+
+  const handleLoginClick = async () => {
+    if (userObj.password.value === "" && userObj.username.value === "") {
+      setUserObj((p) => ({
+        ...p,
+        password: { ...p.password, valid: false },
+        username: { ...p.username, valid: false },
+      }));
+    } else {
+      setLoginBtnDisabled(true);
+      const verifyUserRes = await verifyUser({
+        username: userObj.username.value,
+        password: userObj.password.value,
+      });
+      if (verifyUserRes?.success) {
+        history.push("/dashboard");
+      }
+    }
+  };
 
   return (
     <div className="login-container">
@@ -217,7 +276,7 @@ const Login = () => {
         <RButton
           variant="contained"
           label="Copy To ClipBoard"
-          clickHandler={() => {}}
+          clickHandler={handleSetUserObjState}
         />
       </RPopup>
     </div>
