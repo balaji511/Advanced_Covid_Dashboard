@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { FormControlLabel, Grid } from "@mui/material";
 import React, { useContext } from "react";
 import RInputWithLabel from "../../../../Core/RInputWithLabel/RInputWithLabel.component";
 import {
@@ -6,6 +6,7 @@ import {
   MobileDisplayContext,
 } from "../../../../Context/MobileDisplay.content";
 import RHeaderBoldText from "../../../../Core/RBoldText/RBoldText.component";
+import { CheckBox } from "@mui/icons-material";
 
 const ContactInformation: React.FC<any> = () => {
   const { isMobileScreen } =
@@ -21,15 +22,35 @@ const ContactInformation: React.FC<any> = () => {
       <Grid item sm={isMobileScreen ? 12 : 6} width={"100%"}>
         <RInputWithLabel label="Confirm Email Address" value={""} name={""} />
       </Grid>{" "}
-      <Grid item sm={isMobileScreen ? 6 : 3}>
+      <Grid item sm={isMobileScreen ? 12 : 2} width={"100%"}>
         <RInputWithLabel label="State" value={""} name={""} />
       </Grid>
-      <Grid item sm={isMobileScreen ? 6 : 3}>
+      <Grid item sm={isMobileScreen ? 12 : 2} width={"100%"}>
         <RInputWithLabel label="Code" value={""} name={""} placeHolder="+91" />
       </Grid>{" "}
       <Grid item sm={isMobileScreen ? 12 : 6} width={"100%"}>
         <RInputWithLabel label="Phone Number" value={""} name={""} />
-      </Grid>{" "}
+      </Grid>
+      <Grid
+        item
+        sm={isMobileScreen ? 12 : 2}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+      >
+        <div
+          style={{
+            position: "relative",
+            top: "16px",
+            marginLeft: isMobileScreen ? "8px" : "16px",
+          }}
+        >
+          <FormControlLabel
+            label="SMS notification"
+            control={<CheckBox color="primary" />}
+          />
+        </div>
+      </Grid>
     </Grid>
   );
 };
