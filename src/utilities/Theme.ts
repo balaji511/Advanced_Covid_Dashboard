@@ -1,0 +1,10 @@
+export const bgColor: string = "#161625";
+export const blueColor: string = "#007BFF";
+export const redColor: string = "#FF073A";
+export const greenColor: string = "#28A745";
+export const grayColor: string = "#6C757D";
+export const bgBlueColor: string = "#132240";
+export const bgRedColor: string = "#331427";
+export const bgGreenColor: string = "#182829";
+export const bgGrayColor: string = "#212230";
+export const bgLight: string = "#2F2F43";
