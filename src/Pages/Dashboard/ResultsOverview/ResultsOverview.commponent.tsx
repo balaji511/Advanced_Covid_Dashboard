@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import RLoader from "../../../Core/RLoader/RLoader.Component";
 
 export interface IResultCard {
   cardLabel: string;
@@ -18,6 +19,20 @@ const ResultsOverview: React.FC<IResultCard> = ({
   isContained,
   bgColor,
 }: IResultCard) => {
+  const renderSeverity = () => {
+    switch (cardLabel) {
+      case "Confirmed":
+        return "warning";
+      case "Deceased":
+        return "secondary";
+      case "Active":
+        return "info";
+      case "Recovered":
+        return "success";
+      default:
+        return "info";
+    }
+  };
   return (
     <Box
       sx={{
@@ -34,7 +49,13 @@ const ResultsOverview: React.FC<IResultCard> = ({
     >
       <Typography fontWeight={"bold"}>{cardLabel}</Typography>
       {cardIcon}
-      <Typography fontSize={20}>{cardResultCount}</Typography>
+      <Typography fontSize={20}>
+        {cardResultCount === "0" ? (
+          <RLoader severity={renderSeverity()} />
+        ) : (
+          cardResultCount
+        )}
+      </Typography>
     </Box>
   );
 };

@@ -1,3 +1,14 @@
 .text-input {
   color: white;
 }
+.cell {
+  color: white;
+}
+.header-cell-1 {
+  position: fixed;
+  left: 0;
+  font-weight: bold;
+}
+.header-cell {
+  font-weight: bold;
+}
